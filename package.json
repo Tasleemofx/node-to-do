@@ -1,0 +1,25 @@
+{
+  "name": "to-do-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tasleemofx/node-to-do.git"
+  },
+  "author": "\u001b[A\u001b[C Node, To-do, list\u001b[B",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tasleemofx/node-to-do/issues"
+  },
+  "homepage": "https://github.com/Tasleemofx/node-to-do#readme",
+  "dependencies": {
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.7"
+  }
+}
