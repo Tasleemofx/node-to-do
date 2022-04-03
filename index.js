@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require("express")
 const mongoose = require("mongoose")
+const morgan = require("morgan")
 const app = express()
 const todos = require("./todos")
 
@@ -9,7 +10,8 @@ const PORT = process.env.PORT || 3000
 
 //express middleware
 app.use(express.json())
-app.use(express.urlencoded({ extended: false}))
+app.use(morgan('tiny'))
+app.use(express.urlencoded({ extended: true}))
 
 
 //main route
@@ -37,26 +39,27 @@ app.get('/todo/:id', (req, res)=>{
 
 //Add a new todo with post client
 app.post('/todos',(req,res)=>{
-  const newId = todos.length++;
+  const newId = todos.length+1;
   const todo = req.body.todo
   const checkTodo = todos.find(item=> item.todo == todo)
+  console.log(req.body.todo)
   const newTodo ={
     id: newId,
-    todo: req.body.todo,
+    todo,
     completed: false
   }
 
   if(!newTodo.todo){
     return res.status(400).json({
-      message: "please provide a todo item"
+      message: "Please provide a todo"
     })
-  }else if(newTodo.todo && checkTodo){
+  }else if(checkTodo){
     return res.status(400).json({
       message: "Todo already exists"
     })
   }else{
   todos.push(newTodo)
-  return res.send(todos).status(200)
+  return res.send(newTodo)
 } 
 })
 
