@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/Tasleemofx/node-to-do.git"
   },
-  "author": "\u001b[A\u001b[C Node, To-do, list\u001b[B",
+  "author": "Tasleemofx",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Tasleemofx/node-to-do/issues"
