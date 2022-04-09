@@ -15,49 +15,42 @@ app.use(morgan('tiny'))
 app.use(express.urlencoded({ extended: true}))
 
 //connect mongo database
-try{
-mongoose.connect(process.env.MONGODB_URL)
-.then(
+
+mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser: true}, ()=>
   console.log("server started successfully")
 )
-}
-catch(err){
-  console.log(err)
-}
-//main route
-app.get('/',(req, res)=>{
-    res.send('<h1>Hello World</h1>')
-})
 
 //todo route
-app.get('/todos',(req,res)=>{
+app.get('/todos', async(req,res)=>{
   try{
-    Todo.find()
+    await Todo.find({})
   .then(result=>res.send(result))
   } catch(err){
-    res.json("err:", err.message)
+    res.status(404).json( err.message)
   }
   mongoose.connection.close()
 })
 
 // get todo by id
-app.get('/todo/:id', (req, res)=>{
+app.get('/todo/:id', async(req, res)=>{
   const id = req.params.id
-  Todo.findById({ _id: id })
+  await Todo.findById({ _id: id })
   .then(result=>{
     res.send(result)
   })
 })
 
 //Add a new todo with post client
-app.post('/todos',(req,res)=>{
+app.post('/todos', async (req,res)=>{
+    const todoItem = req.body
     const newTodo = new Todo({
-      todo: req.body.todo,
-      completed: req.body.completed
+      ...todoItem
     })
-    newTodo.save()
-      .then(result => res.send(result))
-      .catch(err => res.status(401).json(err))
+    await newTodo.save()
+      .then(result =>  {
+        console.log("new item added")
+        return res.send(newTodo)})
+      .catch(err => res.status(401).json(err.message))
       mongoose.connection.close()
 })
 

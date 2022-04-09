@@ -2,4 +2,4 @@ GET http://localhost:3000/todos
 
 ###
 
-GET http://localhost:3000
+GET http://localhost:3000/todo/6250f906010f25460e7d81e0
