@@ -15,4 +15,12 @@ const mongoose = require('mongoose');
      }
  })
 
+ todoSchema.set('toJSON',{
+     transform: (document, returnedObject)=>{
+         returnedObject.id= returnedObject._id;
+         delete returnedObject._id
+         delete returnedObject.__v
+     }
+ })
+
 module.exports = mongoose.model('Todos', todoSchema)
